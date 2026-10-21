@@ -1,0 +1,8 @@
+node_modules/
+dist/
+coverage/
+*.log
+*.py
+__pycache__/
+~$*
+Лабораторна 2*.docx
