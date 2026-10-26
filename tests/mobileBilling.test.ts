@@ -31,4 +31,19 @@ describe('Тарифікатор мобільного зв’язку (TDD)', ()
       },
     );
   });
+
+  describe('Цикл 4: Понадпакетні внутрішні хвилини (0.5 грн/хв)', () => {
+    it.each([
+      { minutes: 101, expected: 150.5 },
+      { minutes: 110, expected: 155 },
+      { minutes: 120, expected: 160 },
+      { minutes: 180, expected: 190 },
+      { minutes: 200, expected: 200 },
+    ])(
+      'тривалість $minutes хв понад пакет -> $expected грн',
+      ({ minutes, expected }) => {
+        expect(calcMobileBill(minutes)).toBe(expected);
+      },
+    );
+  });
 });
