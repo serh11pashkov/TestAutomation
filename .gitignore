@@ -3,6 +3,7 @@ dist/
 coverage/
 *.log
 *.py
-__pycache__/
+*.docx
+*.doc
 ~$*
-Лабораторна 2*.docx
+__pycache__/
