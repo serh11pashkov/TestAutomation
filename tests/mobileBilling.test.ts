@@ -46,4 +46,29 @@ describe('Тарифікатор мобільного зв’язку (TDD)', ()
       },
     );
   });
+
+  describe('Цикл 5: Міжнародні дзвінки (3 грн/хв)', () => {
+    it.each([-1, -15, 2.5])(
+      'відхиляє некоректні міжнародні хвилини: %s',
+      (invalidIntl) => {
+        expect(() =>
+          calcMobileBill(50, { internationalMinutes: invalidIntl }),
+        ).toThrow('INVALID_INTERNATIONAL_MINUTES');
+      },
+    );
+
+    it.each([
+      { minutes: 0, intl: 1, expected: 153 },
+      { minutes: 50, intl: 5, expected: 165 },
+      { minutes: 100, intl: 10, expected: 180 },
+      { minutes: 100, intl: 25, expected: 225 },
+    ])(
+      'міжнародні дзвінки $intl хв при $minutes стандартних хв -> $expected грн',
+      ({ minutes, intl, expected }) => {
+        expect(
+          calcMobileBill(minutes, { internationalMinutes: intl }),
+        ).toBe(expected);
+      },
+    );
+  });
 });
