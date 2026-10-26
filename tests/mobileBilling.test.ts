@@ -96,11 +96,26 @@ describe('Тарифікатор мобільного зв’язку (TDD)', ()
         opts: { internationalMinutes: 1, loyaltyDiscount: true },
         expected: 139.05,
       },
+      { minutes: 101, opts: { loyaltyDiscount: false }, expected: 150.5 },
+      { minutes: 100, opts: undefined, expected: 150 },
     ])(
-      'застосовує знижку 10% для $minutes хв та $opts -> $expected грн',
+      'розрахунок для $minutes хв та $opts -> $expected грн',
       ({ minutes, opts, expected }) => {
         expect(calcMobileBill(minutes, opts)).toBeCloseTo(expected, 2);
       },
     );
+  });
+
+  describe('Додаткові тести: перевірка декомпонованих підфункцій', () => {
+    it('прямий виклик calcDomesticFee для межових точок', () => {
+      expect(calcMobileBill(99)).toBe(150);
+      expect(calcMobileBill(100)).toBe(150);
+      expect(calcMobileBill(101)).toBe(150.5);
+    });
+
+    it('прямий виклик calcMobileBill без другого аргументу options', () => {
+      expect(calcMobileBill(50)).toBe(150);
+      expect(calcMobileBill(120)).toBe(160);
+    });
   });
 });
