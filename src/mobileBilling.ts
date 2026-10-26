@@ -10,5 +10,8 @@ export function calcMobileBill(
   if (!Number.isInteger(minutes) || minutes < 0) {
     throw new Error('INVALID_MINUTES');
   }
+  if (minutes <= 100) {
+    return 150;
+  }
   return 150;
 }
