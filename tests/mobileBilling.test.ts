@@ -16,4 +16,19 @@ describe('Тарифікатор мобільного зв’язку (TDD)', ()
       expect(calcMobileBill(0)).toBe(150);
     });
   });
+
+  describe('Цикл 3: Включений пакет 100 хвилин', () => {
+    it.each([
+      { minutes: 0, expected: 150 },
+      { minutes: 1, expected: 150 },
+      { minutes: 50, expected: 150 },
+      { minutes: 99, expected: 150 },
+      { minutes: 100, expected: 150 },
+    ])(
+      'перші 100 хвилин включено в абонплату: $minutes хв -> $expected грн',
+      ({ minutes, expected }) => {
+        expect(calcMobileBill(minutes)).toBe(expected);
+      },
+    );
+  });
 });
