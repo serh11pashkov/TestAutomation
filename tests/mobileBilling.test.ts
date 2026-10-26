@@ -86,4 +86,21 @@ describe('Тарифікатор мобільного зв’язку (TDD)', ()
       },
     );
   });
+
+  describe('Цикл 7: Знижка лояльності та заокруглення до копійок', () => {
+    it.each([
+      { minutes: 100, opts: { loyaltyDiscount: true }, expected: 135 },
+      { minutes: 101, opts: { loyaltyDiscount: true }, expected: 135.45 },
+      {
+        minutes: 103,
+        opts: { internationalMinutes: 1, loyaltyDiscount: true },
+        expected: 139.05,
+      },
+    ])(
+      'застосовує знижку 10% для $minutes хв та $opts -> $expected грн',
+      ({ minutes, opts, expected }) => {
+        expect(calcMobileBill(minutes, opts)).toBeCloseTo(expected, 2);
+      },
+    );
+  });
 });
