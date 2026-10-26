@@ -12,7 +12,12 @@
     "format": "prettier --write .",
     "demo": "tsx src/demo.ts"
   },
-  "keywords": ["tdd", "vitest", "typescript", "test-automation"],
+  "keywords": [
+    "tdd",
+    "vitest",
+    "typescript",
+    "test-automation"
+  ],
   "author": "Serhii Pashkov",
   "license": "ISC",
   "devDependencies": {

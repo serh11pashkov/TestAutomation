@@ -65,9 +65,9 @@ describe('Тарифікатор мобільного зв’язку (TDD)', ()
     ])(
       'міжнародні дзвінки $intl хв при $minutes стандартних хв -> $expected грн',
       ({ minutes, intl, expected }) => {
-        expect(
-          calcMobileBill(minutes, { internationalMinutes: intl }),
-        ).toBe(expected);
+        expect(calcMobileBill(minutes, { internationalMinutes: intl })).toBe(
+          expected,
+        );
       },
     );
   });
@@ -80,9 +80,9 @@ describe('Тарифікатор мобільного зв’язку (TDD)', ()
     ])(
       'комбінований тариф ($minutes хв стандартних + $intl хв міжнародних) -> $expected грн',
       ({ minutes, intl, expected }) => {
-        expect(
-          calcMobileBill(minutes, { internationalMinutes: intl }),
-        ).toBe(expected);
+        expect(calcMobileBill(minutes, { internationalMinutes: intl })).toBe(
+          expected,
+        );
       },
     );
   });
