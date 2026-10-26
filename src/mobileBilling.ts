@@ -13,5 +13,6 @@ export function calcMobileBill(
   if (minutes <= 100) {
     return 150;
   }
-  return 150;
+  const extraMinutes = minutes - 100;
+  return 150 + extraMinutes * 0.5;
 }
