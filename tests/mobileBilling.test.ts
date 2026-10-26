@@ -71,4 +71,19 @@ describe('Тарифікатор мобільного зв’язку (TDD)', ()
       },
     );
   });
+
+  describe('Цикл 6: Комплексна тарифікація (взаємодія правил)', () => {
+    it.each([
+      { minutes: 120, intl: 5, expected: 175 },
+      { minutes: 150, intl: 20, expected: 235 },
+      { minutes: 200, intl: 50, expected: 350 },
+    ])(
+      'комбінований тариф ($minutes хв стандартних + $intl хв міжнародних) -> $expected грн',
+      ({ minutes, intl, expected }) => {
+        expect(
+          calcMobileBill(minutes, { internationalMinutes: intl }),
+        ).toBe(expected);
+      },
+    );
+  });
 });
