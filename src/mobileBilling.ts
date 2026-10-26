@@ -9,30 +9,50 @@ export interface MobileBillingOptions {
   loyaltyDiscount?: boolean;
 }
 
-const round2 = (val: number): number => Math.round(val * 100) / 100;
+export const round2 = (val: number): number => Math.round(val * 100) / 100;
+
+export function assertValidMinutes(minutes: number, errorCode: string): void {
+  if (!Number.isInteger(minutes) || minutes < 0) {
+    throw new Error(errorCode);
+  }
+}
+
+export function calcDomesticFee(minutes: number): number {
+  if (minutes <= INCLUDED_DOMESTIC_MINUTES) {
+    return BASE_SUBSCRIPTION_FEE;
+  }
+  const extraMinutes = minutes - INCLUDED_DOMESTIC_MINUTES;
+  return BASE_SUBSCRIPTION_FEE + extraMinutes * EXTRA_DOMESTIC_MINUTE_RATE;
+}
+
+export function calcInternationalFee(internationalMinutes: number): number {
+  return internationalMinutes * INTERNATIONAL_MINUTE_RATE;
+}
+
+export function applyDiscounts(
+  baseAmount: number,
+  options: MobileBillingOptions,
+): number {
+  let result = baseAmount;
+  if (options.loyaltyDiscount) {
+    result *= LOYALTY_DISCOUNT_RATE;
+  }
+  return result;
+}
 
 export function calcMobileBill(
   minutes: number,
   options: MobileBillingOptions = {},
 ): number {
-  if (!Number.isInteger(minutes) || minutes < 0) {
-    throw new Error('INVALID_MINUTES');
-  }
+  assertValidMinutes(minutes, 'INVALID_MINUTES');
 
   const intlMinutes = options.internationalMinutes ?? 0;
-  if (!Number.isInteger(intlMinutes) || intlMinutes < 0) {
-    throw new Error('INVALID_INTERNATIONAL_MINUTES');
-  }
+  assertValidMinutes(intlMinutes, 'INVALID_INTERNATIONAL_MINUTES');
 
-  let total = BASE_SUBSCRIPTION_FEE;
-  if (minutes > INCLUDED_DOMESTIC_MINUTES) {
-    total += (minutes - INCLUDED_DOMESTIC_MINUTES) * EXTRA_DOMESTIC_MINUTE_RATE;
-  }
-  total += intlMinutes * INTERNATIONAL_MINUTE_RATE;
+  const domesticFee = calcDomesticFee(minutes);
+  const internationalFee = calcInternationalFee(intlMinutes);
+  const subtotal = domesticFee + internationalFee;
 
-  if (options.loyaltyDiscount) {
-    total *= LOYALTY_DISCOUNT_RATE;
-  }
-
+  const total = applyDiscounts(subtotal, options);
   return round2(total);
 }
