@@ -1,0 +1,13 @@
+{
+  "name": "qa-automation-lab6",
+  "version": "1.0.0",
+  "description": "Playwright locators and basic scenarios - Lab 6",
+  "scripts": {
+    "test": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.50.0",
+    "@types/node": "^22.0.0",
+    "typescript": "^5.0.0"
+  }
+}
