@@ -1,0 +1,13 @@
+node_modules/
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+.auth/
+звіт/
+*.docx
+*.doc
+~$*
+coverage/
+*.log
+

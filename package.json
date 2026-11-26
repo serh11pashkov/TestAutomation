@@ -1,0 +1,13 @@
+{
+  "name": "qa-automation-lab7",
+  "version": "1.0.0",
+  "description": "Playwright complex UI interactions - Lab 7",
+  "scripts": {
+    "test": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.50.0",
+    "@types/node": "^22.0.0",
+    "typescript": "^5.0.0"
+  }
+}
